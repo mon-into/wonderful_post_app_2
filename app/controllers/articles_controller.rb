@@ -22,6 +22,17 @@ class ArticlesController < ApplicationController
   # POST /articles or /articles.json
   def create
     @article = Article.new(article_params)
+
+    # respond_to do |format|
+    #   if @article.save
+    #     format.html { redirect_to article_url(@article), notice: "Article was successfully created." }
+    #     format.json { render :show, status: :created, location: @article }
+    #   else
+    #     format.html { render :new, status: :unprocessable_entity }
+    #     format.json { render json: @article.errors, status: :unprocessable_entity }
+    #   end
+    # end
+
     if @article.save
       redirect_to @article, notice: "Article was successfully created."
     else
@@ -47,9 +58,12 @@ class ArticlesController < ApplicationController
   def destroy
     @article.destroy
 
-    respond_to do |format|
-      format.html { redirect_to articles_url, notice: "Article was successfully destroyed." }
-      format.json { head :no_content }
+     # respond_to do |format|
+     #   format.html { redirect_to articles_url, notice: "Article was successfully destroyed." }
+     #   format.json { head :no_content }
+     # end
+      @article.destroy
+      edirect_to articles_url, notice: "Article was successfully destroyed."
     end
   end
 
@@ -63,4 +77,3 @@ class ArticlesController < ApplicationController
     def article_params
       params.require(:article).permit(:title, :content)
     end
-end
